@@ -1,21 +1,22 @@
 #!/usr/bin/env python
 
-
-task_keywords = {
-    'soundboard': ['soundboard', 'play']
+keyword_map = {
+    'watch.add_to_watch_list': ['watchlistadd'],
+    'watch.search_movies': ['moviesearch'],
+    'places.search': ['placesearch'],
+    'weather.current': ['weather', 'temp', 'temperature'],
+    'soundboard.play': ['soundboard', 'play'],
+    'thing.add': ['add'],
+    'thing.search': ['search']
 }
 
 def parse(text):
     words = text.split(' ')
-    task = get_task(words[0])
-    if not task:
-        print "Sorry, I don't know what you mean."
-    else:
-        print 'Okay, running task %s' % (task)
+    user_start_word = words[0]
+    user_args = words[1:]
 
-def get_task(word):
-    for task in task_keywords:
-        for keyword in task_keywords[task]:
-            if word == keyword:
-                return task
+    for task in keyword_map:
+        for keyword in keyword_map[task]:
+            if user_start_word == keyword:
+                return {'task': task, 'args': user_args}
     return None
